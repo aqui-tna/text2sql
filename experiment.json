@@ -1,0 +1,201 @@
+{
+    "name": "Baidi96/text2sql",
+    "url": "https://github.com/aqui-tna/text2sql",
+    "python_version": "3",
+    "requirements": {
+        "req_file": "requirements.txt",
+        "others": [
+            "torch"
+        ]
+    },
+    "entries": [
+        {
+            "cmd": "tar -xjvf data.tar.bz2",
+            "main": "",
+            "steps": ["data-preparation"],
+            "args": [],
+            "ins": [],
+            "outs": [
+                {
+                    "type": "dir",
+                    "location": "data",
+                    "artifact": "dataset"
+                }
+            ]
+        },
+        {
+            "cmd": "bash download_glove.sh",
+            "main": "download_glove.sh",
+            "steps": ["data-preparation"],
+            "args": [],
+            "ins": [],
+            "outs": [
+                {
+                    "type": "dir",
+                    "location": "glove",
+                    "artifact": "dataset"
+                }
+            ]
+        },
+        {
+            "cmd": "python extract_vocab.py",
+            "main": "extract_vocab.py",
+            "steps": ["data-preprocessing"],
+            "args": [],
+            "ins": [
+                {
+                    "type": "dir",
+                    "location": "data",
+                    "artifact": "dataset"
+                }
+            ],
+            "outs": [
+                {
+                    "type": "file",
+                    "location": "glove/word2idx.json",
+                    "artifact": "dataset"
+                },
+                {
+                    "type": "file",
+                    "location": "glove/usedwordemb.npy",
+                    "artifact": "dataset"
+                }
+        
+            ]
+        },
+        {
+            "cmd": "python train.py",
+            "main": "train.py",
+            "steps": ["training"],
+            "args_lib": "argparse",
+            "args": [
+                {
+                    "names": ["--toy"],
+                    "input": false,
+                    "ex_has_default": false
+                },
+                {
+                    "names": ["--suffix"],
+                    "input": true,
+                    "ex_has_default": true,
+                    "default": "",
+                    "type": "str",
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--ca"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--dataset"],
+                    "input": true,
+                    "ex_has_default": true,
+                    "default": 0,
+                    "type": "int",
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--rl"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--baseline"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--train_emb"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                }
+            ],
+            "ins": [
+                {
+                    "type": "dir",
+                    "location": "glove"
+                },
+                {
+                    "type": "dir",
+                    "location": "data"
+                }
+            ],
+            "outs": [
+                {
+                    "type": "dir",
+                    "location": "saved_model"
+                }
+        
+            ]
+        },
+        {
+            "cmd": "python test.py",
+            "main": "test.py",
+            "steps": ["testing"],
+            "ex_args_lib": "argparse",
+            "args": [
+                {
+                    "names": ["--toy"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--ca"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--dataset"],
+                    "input": true,
+                    "ex_has_default": true,
+                    "default": 0,
+                    "type": "int",
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--rl"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--baseline"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                },
+                {
+                    "names": ["--train_emb"],
+                    "input": false,
+                    "ex_has_default": false,
+                    "ex_mandatory": false
+                }
+            ],
+            "ins": [
+                {
+                    "type": "dir",
+                    "location": "glove"
+                },
+                {
+                    "type": "dir",
+                    "location": "data"
+                }
+            ],
+            "outs": [
+                {
+                    "type": "folder",
+                    "location": "saved_model"
+                }
+        
+            ]
+        }
+        
+    ]
+}
