@@ -4,17 +4,24 @@
     "python_version": "3",
     "requirements": {
         "req_file": "requirements.txt",
-        "others": [
-            "torch"
-        ]
+        "pip": ["torch"],
+        
+        "others": ["tar"]
     },
     "entries": [
         {
             "cmd": "tar -xjvf data.tar.bz2",
-            "main": "",
+            "main": "unknown",
             "steps": ["data-preparation"],
             "args": [],
-            "ins": [],
+            "ins": [
+                {
+                    "type": "file",
+                    "location": "data.tar.bz2",
+                    "artifact": "dataset",
+                    "ex_in_repo": true
+                }
+            ],
             "outs": [
                 {
                     "type": "dir",
@@ -46,7 +53,8 @@
                 {
                     "type": "dir",
                     "location": "data",
-                    "artifact": "dataset"
+                    "artifact": "dataset",
+                    "ex_in_repo": true
                 }
             ],
             "outs": [
@@ -66,63 +74,69 @@
         {
             "cmd": "python train.py",
             "main": "train.py",
-            "steps": ["training"],
+            "steps": ["training", "main"],
             "args_lib": "argparse",
             "args": [
                 {
                     "names": ["--toy"],
-                    "input": false,
-                    "ex_has_default": false
+                    "input": null,
+                    "default": false,
+                    "ex_has_default": true,
+                    "mandatory": false
                 },
                 {
                     "names": ["--suffix"],
-                    "input": true,
+                    "input": "SUFFIX",
                     "ex_has_default": true,
                     "default": "",
                     "type": "str",
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--ca"],
                     "input": false,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--dataset"],
-                    "input": true,
+                    "input": "DATASET",
                     "ex_has_default": true,
                     "default": 0,
-                    "type": "int",
-                    "ex_mandatory": false
+                    "type": "float",
+                    "mandatory": false
                 },
                 {
                     "names": ["--rl"],
-                    "input": false,
+                    "input": null,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--baseline"],
-                    "input": false,
+                    "input": null,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--train_emb"],
                     "input": false,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 }
             ],
             "ins": [
                 {
                     "type": "dir",
-                    "location": "glove"
+                    "location": "glove",
+                    "artifact": "dataset",
+                    "ex_in_repo": true
                 },
                 {
                     "type": "dir",
-                    "location": "data"
+                    "location": "data",
+                    "artifact": "dataset",
+                    "ex_in_repo": true
                 }
             ],
             "outs": [
@@ -141,51 +155,56 @@
             "args": [
                 {
                     "names": ["--toy"],
-                    "input": false,
-                    "ex_has_default": false,
-                    "ex_mandatory": false
+                    "input": null,
+                    "default": false,
+                    "ex_has_default": true,
+                    "mandatory": false
                 },
                 {
                     "names": ["--ca"],
-                    "input": false,
+                    "input": null,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--dataset"],
-                    "input": true,
+                    "input": "DATASET",
                     "ex_has_default": true,
                     "default": 0,
                     "type": "int",
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--rl"],
-                    "input": false,
+                    "input": null,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--baseline"],
-                    "input": false,
+                    "input": null,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 },
                 {
                     "names": ["--train_emb"],
-                    "input": false,
+                    "input": null,
                     "ex_has_default": false,
-                    "ex_mandatory": false
+                    "mandatory": false
                 }
             ],
             "ins": [
                 {
                     "type": "dir",
-                    "location": "glove"
+                    "location": "glove",
+                    "artifact": "dataset",
+                    "ex_in_repo": true
                 },
                 {
                     "type": "dir",
-                    "location": "data"
+                    "location": "data",
+                    "artifact": "dataset",
+                    "ex_in_repo": true
                 }
             ],
             "outs": [
@@ -197,5 +216,16 @@
             ]
         }
         
-    ]
+    ],
+    "ex_metrics": {
+        "metrics_files": [],
+        "prints": ["train acc_qm", "dev acc_qm", "best val acc"],
+        "plots": [],
+        "others": []
+    },
+    "ex_hyperparams": {
+        "from_cmd": [],
+        "config_file": [],
+        "in_code": ["epoch"]
+    }
 }
