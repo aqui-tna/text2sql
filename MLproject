@@ -1,13 +1,17 @@
 name: Baidi96/text2sql
 conda_env: conda_text2sql.yaml
 entry_points:
-  step0_data-preparation_custom:
+  main:
     command: bash ex_custom_cmd_step0.sh
   step1_data-preparation:
     command: bash download_glove.sh
   step2_data-preprocessing:
     command: python extract_vocab.py
-  main:
+  step3_training:
     command: python train.py
   step4_testing:
-    command: python test.py
+    parameters:
+      dataset:
+        type: float
+        default: 0
+    command: python test.py --dataset {dataset}
