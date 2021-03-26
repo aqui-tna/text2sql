@@ -154,42 +154,69 @@
             "ex_args_lib": "argparse",
             "args": [
                 {
-                    "names": ["--toy"],
-                    "input": null,
-                    "default": false,
+                    "names": [
+                        "--toy"
+                    ],
+                    "input": false,
+                    "dest": "toy",
                     "ex_has_default": true,
+                    "default": false,
+                    "type": "float",
                     "mandatory": false
                 },
                 {
-                    "names": ["--ca"],
-                    "input": null,
-                    "ex_has_default": false,
+                    "names": [
+                        "--ca"
+                    ],
+                    "input": false,
+                    "dest": "ca",
+                    "ex_has_default": true,
+                    "default": false,
+                    "type": "float",
                     "mandatory": false
                 },
                 {
-                    "names": ["--dataset"],
-                    "input": "DATASET",
+                    "names": [
+                        "--dataset"
+                    ],
+                    "input": true,
+                    "dest": "dataset",
                     "ex_has_default": true,
                     "default": 0,
-                    "type": "int",
+                    "type": "float",
+                    "mandatory": true
+                },
+                {
+                    "names": [
+                        "--rl"
+                    ],
+                    "input": false,
+                    "dest": "rl",
+                    "ex_has_default": true,
+                    "default": false,
+                    "type": "float",
                     "mandatory": false
                 },
                 {
-                    "names": ["--rl"],
-                    "input": null,
-                    "ex_has_default": false,
+                    "names": [
+                        "--baseline"
+                    ],
+                    "input": false,
+                    "dest": "baseline",
+                    "ex_has_default": true,
+                    "default": false,
+                    "type": "float",
                     "mandatory": false
                 },
                 {
-                    "names": ["--baseline"],
-                    "input": null,
-                    "ex_has_default": false,
-                    "mandatory": false
-                },
-                {
-                    "names": ["--train_emb"],
-                    "input": null,
-                    "ex_has_default": false,
+                    "names": [
+                        "--train_emb"
+                    ],
+                    "input": false,
+                    "dest": "train_emb",
+                    "ex_has_default": true,
+                    "default": false,
+                    "type": "float",
                     "mandatory": false
                 }
             ],
