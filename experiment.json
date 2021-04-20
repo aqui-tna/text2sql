@@ -8,17 +8,23 @@
         
         "others": ["tar"]
     },
+    "to_run": {
+        "decision": true,
+        "reason": null
+    },
     "entries": [
         {
             "cmd": "tar -xjvf data.tar.bz2",
             "main": "unknown",
             "steps": ["data-preparation"],
+            "args_lib": null,
             "args": [],
             "ins": [
                 {
                     "type": "file",
                     "location": "data.tar.bz2",
                     "artifact": "dataset",
+                    "ex_from": "cmd",
                     "ex_in_repo": true
                 }
             ],
@@ -26,7 +32,9 @@
                 {
                     "type": "dir",
                     "location": "data",
-                    "artifact": "dataset"
+                    "artifact": "dataset",
+                    "ex_from": "cmd",
+                    "ex_in_repo": false
                 }
             ]
         },
@@ -40,7 +48,9 @@
                 {
                     "type": "dir",
                     "location": "glove",
-                    "artifact": "dataset"
+                    "artifact": "dataset",
+                    "ex_from": "manual",
+                    "ex_in_repo": false
                 }
             ]
         },
@@ -54,19 +64,31 @@
                     "type": "dir",
                     "location": "data",
                     "artifact": "dataset",
-                    "ex_in_repo": true
+                    "ex_from": "manual",
+                    "ex_in_repo": false
+                },
+                {
+                    "type": "dir",
+                    "location": "glove",
+                    "artifact": "dataset",
+                    "ex_from": "manual",
+                    "ex_in_repo": false
                 }
             ],
             "outs": [
                 {
                     "type": "file",
                     "location": "glove/word2idx.json",
-                    "artifact": "dataset"
+                    "artifact": "dataset",
+                    "ex_from": "manual",
+                    "ex_in_repo": false
                 },
                 {
                     "type": "file",
                     "location": "glove/usedwordemb.npy",
-                    "artifact": "dataset"
+                    "artifact": "dataset",
+                    "ex_from": "manual",
+                    "ex_in_repo": false
                 }
         
             ]
@@ -130,19 +152,24 @@
                     "type": "dir",
                     "location": "glove",
                     "artifact": "dataset",
-                    "ex_in_repo": true
+                    "ex_in_repo": false,
+                    "ex_from": "cmd"
                 },
                 {
                     "type": "dir",
                     "location": "data",
                     "artifact": "dataset",
-                    "ex_in_repo": true
+                    "ex_in_repo": false,
+                    "ex_from": "cmd"
                 }
             ],
             "outs": [
                 {
                     "type": "dir",
-                    "location": "saved_model"
+                    "location": "saved_model",
+                    "artifact": "moderl",
+                    "ex_in_repo": true,
+                    "ex_from": "manual"
                 }
         
             ]
@@ -225,19 +252,24 @@
                     "type": "dir",
                     "location": "glove",
                     "artifact": "dataset",
-                    "ex_in_repo": true
+                    "ex_in_repo": false,
+                    "ex_from": "cmd"
                 },
                 {
                     "type": "dir",
                     "location": "data",
                     "artifact": "dataset",
-                    "ex_in_repo": true
+                    "ex_in_repo": false,
+                    "ex_from": "cmd"
                 }
             ],
             "outs": [
                 {
                     "type": "folder",
-                    "location": "saved_model"
+                    "location": "saved_model",
+                    "artifact": "model",
+                    "ex_in_repo": true,
+                    "ex_from": "manual"
                 }
         
             ]
@@ -252,7 +284,8 @@
     },
     "ex_hyperparams": {
         "from_cmd": [],
-        "config_file": [],
-        "in_code": ["epoch"]
+        "config_files": [],
+        "in_code": ["epoch"],
+        "others": []
     }
 }
