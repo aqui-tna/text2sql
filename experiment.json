@@ -108,7 +108,7 @@
                 },
                 {
                     "names": ["--suffix"],
-                    "input": "SUFFIX",
+                    "input": true,
                     "ex_has_default": true,
                     "default": "",
                     "type": "str",
@@ -122,7 +122,7 @@
                 },
                 {
                     "names": ["--dataset"],
-                    "input": "DATASET",
+                    "input": true,
                     "ex_has_default": true,
                     "default": 0,
                     "type": "float",
