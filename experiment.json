@@ -285,7 +285,7 @@
     "ex_hyperparams": {
         "from_cmd": [],
         "config_files": [],
-        "in_code": ["epoch"],
+        "in_code": ["epoch", "N_word", "B_word"],
         "others": []
     }
 }

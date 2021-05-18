@@ -8,6 +8,7 @@ import datetime
 #import mxnet as mx
 #from bert_embedding import BertEmbedding
 import argparse
+import mlflow
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -26,6 +27,7 @@ if __name__ == '__main__':
     parser.add_argument('--train_emb', action='store_true',
             help='Train word embedding for SQLNet(requires pretrained model).')
     args = parser.parse_args()
+    
 
     N_word=300
     B_word=42

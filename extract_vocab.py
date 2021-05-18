@@ -5,6 +5,7 @@ import numpy as np
 import datetime
 #import mxnet as mx
 #from bert_embedding import BertEmbedding
+import mlflow
 
 LOCAL_TEST=False
 
@@ -69,3 +70,5 @@ with open('glove/word2idx.json', 'w') as outf:
     json.dump(word_to_idx, outf)
 np.save(open('glove/usedwordemb.npy', 'wb'), emb_array)
 
+mlflow.log_artifact("glove")
+mlflow.log_artifact("data")
