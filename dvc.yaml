@@ -1,0 +1,26 @@
+stages:
+  step0_data-preparation:
+    cmd: tar -xjvf data.tar.bz2
+    deps:
+    - data.tar.bz2
+  step1_data-preparation:
+    cmd: bash download_glove.sh
+    deps:
+    - download_glove.sh
+  step2_data-preprocessing:
+    cmd: python extract_vocab.py
+    deps:
+    - extract_vocab.py
+  step3_training:
+    cmd: python train.py
+    params:
+    - suffix
+    - dataset
+    deps:
+    - train.py
+  step4_testing:
+    cmd: python test.py
+    params:
+    - dataset
+    deps:
+    - test.py
