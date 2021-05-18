@@ -8,6 +8,7 @@ import datetime
 #import mxnet as mx
 #from bert_embedding import BertEmbedding
 import argparse
+import mlflow
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -167,3 +168,4 @@ if __name__ == '__main__':
             print(' Best val acc = {}, on epoch {} individually'.format(
                     (best_agg_acc, best_sel_acc, best_cond_acc),
                     (best_agg_idx, best_sel_idx, best_cond_idx)))
+            mlflow.log_metrics({"best_agg_acc": best_agg_acc, "best_sel_acc": best_sel_acc, "best_cond_acc": best_cond_acc})
