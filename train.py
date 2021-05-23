@@ -10,6 +10,14 @@ import datetime
 import argparse
 import mlflow
 
+class Text2sqlModel(mlflow.pyfunc.PythonModel):
+    def __init__(self, model):
+        super().__init__()
+        self.model = torch.load(model)
+
+    def predict(input=None):
+        pass
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--toy', action='store_true', 
@@ -83,7 +91,7 @@ if __name__ == '__main__':
         print("Init dev acc_ex: {}".formatepoch_exec_acc(
                 model, BATCH_SIZE, val_sql_data, val_table_data, DEV_DB))
         torch.save(model.cond_pred.state_dict(), cond_m)
-        for i in range(100):
+        for i in range(5):
             print('Epoch {} @ {}'.format((i+1, datetime.datetime.now())))
             print(' Avg reward = {}'.format(epoch_reinforce_train( \
                 model, optimizer, BATCH_SIZE, sql_data, table_data, TRAIN_DB)))
@@ -122,7 +130,7 @@ if __name__ == '__main__':
             torch.save(model.cond_pred.state_dict(), cond_m)
             if args.train_emb:
                 torch.save(model.cond_embed_layer.state_dict(), cond_e)
-        for i in range(100):
+        for i in range(5):
             print('Epoch {} @ {}'.format(i+1, datetime.datetime.now()))
             print('Loss = {}'.format(epoch_train( \
                     model, optimizer, BATCH_SIZE, 
@@ -169,3 +177,23 @@ if __name__ == '__main__':
                     (best_agg_acc, best_sel_acc, best_cond_acc),
                     (best_agg_idx, best_sel_idx, best_cond_idx)))
             mlflow.log_metrics({"best_agg_acc": best_agg_acc, "best_sel_acc": best_sel_acc, "best_cond_acc": best_cond_acc})
+
+    #Logging models
+    if args.train_emb:
+        agg_m, sel_m, cond_m, agg_e, sel_e, cond_e = best_model_name(args)
+
+    else:
+        agg_m, sel_m, cond_m = best_model_name(args)
+    agg_model = Text2sqlModel(agg_m)
+    sel_model = Text2sqlModel(sel_m)
+    cond_model = Text2sqlModel(cond_m)
+
+    mlflow.set_tracking_uri("sqlite:///mlruns.db")
+    mlflow.pyfunc.save_model(path=f"mlflow_{agg_m}", python_model=agg_model)
+    mlflow.pyfunc.log_model(artifact_path=f"mlflow_{agg_m}", python_model=agg_model, registered_model_name="Agg model")
+
+    mlflow.pyfunc.save_model(path=f"mlflow_{sel_m}", python_model=sel_model)
+    mlflow.pyfunc.log_model(artifact_path=f"mlflow_{sel_m}", python_model=sel_model, registered_model_name="sel model")
+
+    mlflow.pyfunc.save_model(path=f"mlflow_{cond_m}", python_model=cond_model)
+    mlflow.pyfunc.log_model(artifact_path=f"mlflow_{cond_m}", python_model=cond_model, registered_model_name="cond model")

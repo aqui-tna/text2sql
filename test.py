@@ -72,7 +72,6 @@ if __name__ == '__main__':
         model.sel_pred.load_state_dict(torch.load(sel_m))
         print("Loading from {}".format(cond_m))
         model.cond_pred.load_state_dict(torch.load(cond_m))
-
     print("Dev acc_qm: ;\n  breakdown on (agg, sel, where): {}".format(epoch_acc(
             model, BATCH_SIZE, val_sql_data, val_table_data, TEST_ENTRY)))
     print("Dev execution acc: {}".format(epoch_exec_acc(

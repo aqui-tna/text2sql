@@ -85,3 +85,6 @@ def workflow():
 
 if __name__ == "__main__":
     workflow()
+    mlflow.log_artifact("data")
+    mlflow.log_artifact("glove")
+    
